@@ -37,26 +37,23 @@ def register_input():
             quit = True
 
 
-# env = RewardWrapper(gym.make('CarRacing-v2', render_mode="human"))
-env = gym.make('CarRacing-v2', render_mode="human")
+env = RewardWrapper(gym.make('CarRacing-v2', render_mode="human"))
+# env = gym.make('CarRacing-v2', render_mode="human")
 
 quit = False
-# while not quit:
-env.reset()
-total_reward = 0.0
-steps = 0
-restart = False
-while True:
-    register_input()
-    obs, reward, terminated, truncated, info = env.step(a)
-    total_reward += reward
-    if terminated:
-        print("terminated")
-        exit(0)
-    if steps % 200 == 0 or truncated:
-        print("\naction " + str([f"{x:+0.2f}" for x in a]))
-        print(f"step {steps} total_reward {total_reward:+0.2f}")
-    steps += 1
-    if terminated or truncated or restart or quit:
-        break
+while not quit:
+    env.reset()
+    total_reward = 0.0
+    steps = 0
+    restart = False
+    while True:
+        register_input()
+        s, r, terminated, truncated, info = env.step(a)
+        total_reward += r
+        if steps % 200 == 0 or terminated or truncated:
+            print("\naction " + str([f"{x:+0.2f}" for x in a]))
+            print(f"step {steps} total_reward {total_reward:+0.2f}")
+        steps += 1
+        if terminated or truncated or restart or quit:
+            break
 env.close()

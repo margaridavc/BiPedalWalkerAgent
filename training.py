@@ -5,6 +5,7 @@ from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.a2c import MlpPolicy as A2C_MlpPolicy
 from stable_baselines3.ppo import MlpPolicy as PPO_MlpPolicy
+from NewReward import RewardWrapper
 
 env_id = "CarRacing-v2"
 TIMESTEPS = 10000
@@ -49,8 +50,8 @@ def main():
 
         model_type = argv[1]
 
-        # Create the vectorized environment using make_vec_env
-        env = make_vec_env(env_id, n_envs=NUM_ENVS, vec_env_cls=SubprocVecEnv, vec_env_kwargs=dict(start_method='fork'))
+        # Create the vectorized environment using make_vec_env and the new wrapper: RewardWrapper
+        env = make_vec_env(env_id, n_envs=NUM_ENVS, wrapper_class=RewardWrapper, vec_env_cls=SubprocVecEnv, vec_env_kwargs=dict(start_method='fork'))
 
         if model_type == "A2C":
             train_model(A2C, model_type, A2C_MlpPolicy, env)
