@@ -27,12 +27,19 @@ def test_model(algorithm, algo_name, iteration):
 
 
 def main(algorithm, iteration):
-    if not iteration.isdigit():
-        print("Invalid iteration.")
-        sys.exit(1)
-    iteration = int(iteration)
+    if iteration == "latest":
+        iteration = latest_model(algorithm).split('/')[-1].split('.')[0]
+        if algorithm == "A2C":
+            test_model(A2C, algorithm, iteration)
+        elif algorithm == "PPO":
+            test_model(PPO, algorithm, iteration)
+        elif algorithm == "SAC":
+            test_model(SAC, algorithm, iteration)
+        else:
+            print("Invalid algorithm.")
+            sys.exit(1)
 
-    if is_valid_iteration(iteration, algorithm):
+    elif iteration.isdigit() and is_valid_iteration(iteration, algorithm):
         if algorithm == "A2C":
             test_model(A2C, algorithm, iteration)
         elif algorithm == "PPO":

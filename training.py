@@ -60,9 +60,9 @@ def main():
         model_type = argv[1]
 
         if model_type == "A2C":
-            train_model(A2C, model_type, "MlpPolicy", n_envs=3)
+            train_model(A2C, model_type, "MlpPolicy", n_envs=1)
         elif model_type == "PPO":
-            train_model(PPO, model_type, "MlpPolicy", n_envs=5)
+            train_model(PPO, model_type, "MlpPolicy", n_envs=4)
         elif model_type == "SAC":
             train_model(SAC, model_type, "MlpPolicy", n_envs=20)
         else:
