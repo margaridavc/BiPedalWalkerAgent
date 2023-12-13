@@ -5,22 +5,14 @@ class RewardWrapper(RW):
     def __init__(self, env):
         super().__init__(env)
         self.env = env
-        self.penalty_limit = 500
-
-    def reset(self, **kwargs):
-        self.penalty_limit = 500
-        return self.env.reset(**kwargs)
 
     def step(self, action):
         # Perform the environment step
         obs, reward, done, _, info = self.env.step(action)
 
-        # print(f"Penalty limit: {self.penalty_limit}")
-        if float(reward) < 0:
-            self.penalty_limit -= 1
-            if self.penalty_limit == 0:
-                done = True
-        else:
-            self.penalty_limit = 500
+        # Add a reward for keeping balance
+        # obs[2] is the angle of the agent from the vertical position
+        balance_reward = abs(obs[2])
+        reward += balance_reward
 
         return obs, reward, done, _, info

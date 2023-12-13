@@ -1,8 +1,10 @@
 import sys
 import gymnasium as gym
 from training import latest_model
-from stable_baselines3 import PPO
-from stable_baselines3 import A2C
+from stable_baselines3 import PPO, SAC, A2C
+from training import latest_model
+
+env = gym.make('BipedalWalker-v3', render_mode="human")
 
 
 def is_valid_iteration(iteration, algorithm):
@@ -14,15 +16,14 @@ def is_valid_iteration(iteration, algorithm):
 
 
 def test_model(algorithm, algo_name, iteration):
-    model = algorithm.load(f"models/{algo_name}/{iteration}0000")
-    env = gym.make('CarRacing-v2', render_mode="human")
+    model = algorithm.load(f"models/{algo_name}/{iteration}.zip")
     obs, info = env.reset()
-    done = False
-    while done:
+    while True:
         action, _states = model.predict(obs)
-        obs, rewards, done, _, info = env.step(action)
+        obs, rewards, terminated, truncated, info = env.step(action)
         env.render()
-        print(rewards)
+        if terminated or truncated:
+            break
 
 
 def main(algorithm, iteration):
@@ -36,6 +37,8 @@ def main(algorithm, iteration):
             test_model(A2C, algorithm, iteration)
         elif algorithm == "PPO":
             test_model(PPO, algorithm, iteration)
+        elif algorithm == "SAC":
+            test_model(SAC, algorithm, iteration)
         else:
             print("Invalid algorithm.")
             sys.exit(1)
@@ -45,8 +48,24 @@ def main(algorithm, iteration):
         sys.exit(1)
 
 
+def test_untrained():
+    model = PPO("MlpPolicy", env, verbose=1)
+    obs, info = env.reset()
+    while True:
+        action, _states = model.predict(obs)
+        obs, rewards, terminated, truncated, info = env.step(action)
+        env.render()
+        if terminated or truncated:
+            break
+
+
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+
+    if sys.argv[1] == "untrained":
+        test_untrained()
+        sys.exit(0)
+
+    elif len(sys.argv) != 3:
         print("Usage: python script.py <algorithm> <iteration to test>")
         sys.exit(1)
 
