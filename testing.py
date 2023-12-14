@@ -1,10 +1,11 @@
 import sys
 import gymnasium as gym
 from training import latest_model
+from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3 import PPO, SAC, A2C
 from training import latest_model
 
-env = gym.make('BipedalWalker-v3', render_mode="human")
+env = gym.make('BipedalWalker-v3', hardcore=True, render_mode="human")
 
 
 def is_valid_iteration(iteration, algorithm):
@@ -17,13 +18,9 @@ def is_valid_iteration(iteration, algorithm):
 
 def test_model(algorithm, algo_name, iteration):
     model = algorithm.load(f"models/{algo_name}/{iteration}.zip")
-    obs, info = env.reset()
-    while True:
-        action, _states = model.predict(obs)
-        obs, rewards, terminated, truncated, info = env.step(action)
-        env.render()
-        if terminated or truncated:
-            break
+    mean_reward, std_reward = evaluate_policy(model, env,
+                                              n_eval_episodes=1, warn=False)
+    print(f"mean_reward: {mean_reward:.2f} +/- {std_reward:.2f}")
 
 
 def main(algorithm, iteration):

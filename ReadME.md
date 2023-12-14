@@ -24,22 +24,23 @@ Python Versions:
 
 # Requirements
 
-In order to gave everything organized and simple, we will use [MiniConda](https://docs.conda.io/projects/miniconda/en/latest/) to manage our environments.
+To keep everything organized and simple,
+we will use [MiniConda](https://docs.conda.io/projects/miniconda/en/latest/) to manage our environments.
 
-To create an enviroment with the required packages for this project, run the following commands:
+To create an environment with the required packages for this project, run the following commands:
+
+```bash
+
+```
+
+Then we also needed these packages:
 
 ```bash
 conda create -n GymEnv python=3.10 pytorch::pytorch torchvision torchaudio -c pytorch
-```
-
-Then we also needed this packages:
-
-```bash
 pip install 'stable-baselines3[extra]'
-```
-
-```bash
+pip install swig
 pip install 'gymnasium[box2d]'
+pip install sb3-contrib
 ```
 
 
