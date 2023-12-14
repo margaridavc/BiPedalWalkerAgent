@@ -1,16 +1,15 @@
 import os
 from sys import argv
 
-import gymnasium as gym
-from stable_baselines3 import A2C, PPO, SAC, DDPG, TD3
-from sb3_contrib import ARS, RecurrentPPO, TQC, TRPO
+from stable_baselines3 import PPO, SAC
+from sb3_contrib import ARS, TQC, TRPO
 from stable_baselines3.common.env_util import make_vec_env
-from stable_baselines3.common.vec_env import SubprocVecEnv, DummyVecEnv
+from stable_baselines3.common.vec_env import SubprocVecEnv
 from NewReward import RewardWrapper
 
 env_id = "BipedalWalker-v3"
 
-TIMESTEPS = 10000
+TIMESTEPS = 100000
 models_dir = "models"
 logdir = "logs"
 
@@ -22,20 +21,15 @@ def latest_model(algorithm):
 
 
 def train_model(algo, algo_name, policy, n_envs=os.cpu_count()):
-
-    if n_envs == 1:
-        env = DummyVecEnv([lambda: gym.make(env_id, hardcore=True)])
-        # env = DummyVecEnv([lambda: RewardWrapper(gym.make(env_id, hardcore=True)) ])
-    else:
-        env = make_vec_env(env_id, n_envs=n_envs, vec_env_cls=SubprocVecEnv, env_kwargs=dict(hardcore=True),
-                           vec_env_kwargs=dict(start_method='fork'))  # , wrapper_class=RewardWrapper)
+    env = make_vec_env(env_id, n_envs=n_envs, vec_env_cls=SubprocVecEnv, env_kwargs=dict(hardcore=True),
+                       vec_env_kwargs=dict(start_method='fork'))  # , wrapper_class=RewardWrapper)
 
     if os.path.exists(f"{models_dir}/{algo_name}"):
         if os.listdir(f"{models_dir}/{algo_name}"):
 
             model_path = latest_model(algo_name)
             model = algo.load(model_path, env=env)
-            iters = int(int(model_path.split("/")[2].split(".")[0]) / 10 ** 4)
+            iters = int(int(model_path.split("/")[2].split(".")[0]) / TIMESTEPS)
         else:
 
             # policy_kwargs=dict(net_arch=[{"conv1d": [32, 3, 1]}, {"fc": [256]}])  CNN nn architecture
@@ -54,7 +48,7 @@ def train_model(algo, algo_name, policy, n_envs=os.cpu_count()):
         model.learn(total_timesteps=TIMESTEPS, progress_bar=True, reset_num_timesteps=False,
                     tb_log_name=algo_name)  # (hyperparameters) , batch_size=256, ent_coef=0.01, vf_coef=0.5, gae_lambda=0.95))
         model.save(f"{models_dir}/{algo_name}/{TIMESTEPS * iters}")
-        if iters*10**4 == 1.5*10**6:
+        if iters*TIMESTEPS >= 50*10**6:
             break
 
 
@@ -68,24 +62,16 @@ def main():
 
         model_type = argv[1]
 
-        if model_type == "A2C":
-            train_model(A2C, model_type, "MlpPolicy")
-        elif model_type == "PPO":
-            train_model(PPO, model_type, "MlpPolicy")  # , n_envs=10)
+        if model_type == "PPO":
+            train_model(PPO, model_type, "MlpPolicy", n_envs=10)
         elif model_type == "SAC":
-            train_model(SAC, model_type, "MlpPolicy")  # , n_envs=50)
-        elif model_type == "DDPG":
-            train_model(DDPG, model_type, "MlpPolicy", n_envs=1)
-        elif model_type == "TD3":
-            train_model(TD3, model_type, "MlpPolicy", n_envs=1)
+            train_model(SAC, model_type, "MlpPolicy", n_envs=50)
         elif model_type == "ARS":
-            train_model(ARS, model_type, "MlpPolicy")  # , n_envs=50)
-        elif model_type == "RecurrentPPO":
-            train_model(RecurrentPPO, model_type, "MlpLstmPolicy")  # , n_envs=50)
+            train_model(ARS, model_type, "MlpPolicy", n_envs=2)
         elif model_type == "TQC":
-            train_model(TQC, model_type, "MlpPolicy")  # , n_envs=50)
+            train_model(TQC, model_type, "MlpPolicy", n_envs=50)
         elif model_type == "TRPO":
-            train_model(TRPO, model_type, "MlpPolicy")  # , n_envs=50)
+            train_model(TRPO, model_type, "MlpPolicy", n_envs=3)
 
         else:
             raise ValueError("Invalid argument. Please specify a valid algorithm.")

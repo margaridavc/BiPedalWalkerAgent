@@ -1,5 +1,7 @@
 import sys
 import gymnasium as gym
+from sb3_contrib import ARS, TRPO, TQC
+
 from training import latest_model
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3 import PPO, SAC, A2C
@@ -26,23 +28,32 @@ def test_model(algorithm, algo_name, iteration):
 def main(algorithm, iteration):
     if iteration == "latest":
         iteration = latest_model(algorithm).split('/')[-1].split('.')[0]
-        if algorithm == "A2C":
-            test_model(A2C, algorithm, iteration)
+
+        if algorithm == "ARS":
+            test_model(ARS, algorithm, iteration)
         elif algorithm == "PPO":
             test_model(PPO, algorithm, iteration)
         elif algorithm == "SAC":
             test_model(SAC, algorithm, iteration)
+        elif algorithm == "TRPO":
+            test_model(TRPO, algorithm, iteration)
+        elif algorithm == "TQC":
+            test_model(TQC, algorithm, iteration)
         else:
             print("Invalid algorithm.")
             sys.exit(1)
 
     elif iteration.isdigit() and is_valid_iteration(iteration, algorithm):
-        if algorithm == "A2C":
-            test_model(A2C, algorithm, iteration)
+        if algorithm == "ARS":
+            test_model(ARS, algorithm, iteration)
         elif algorithm == "PPO":
             test_model(PPO, algorithm, iteration)
         elif algorithm == "SAC":
             test_model(SAC, algorithm, iteration)
+        elif algorithm == "TRPO":
+            test_model(TRPO, algorithm, iteration)
+        elif algorithm == "TQC":
+            test_model(TQC, algorithm, iteration)
         else:
             print("Invalid algorithm.")
             sys.exit(1)
