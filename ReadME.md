@@ -47,23 +47,16 @@ pip install -r requirements.txt
 
 ##### The experiments are in this [notebook](notebook.ipynb).
 
-##### Here are our best results:
 
 
-TQC in the original environment:
 
-![TQC_original.gif](media/TQC_original.gif)
+|       TQC in the original environment:        |       TQC in the wrapped environment        |
+|:---------------------------------------------:|:-------------------------------------------:|
+|  ![TQC_original.gif](media/TQC_original.gif)  | ![TQC_wrapped.gif](media%2FTQC_wrapped.gif) |
 
-TQC in the wrapped environment:
 
-![TQC_wrapped.gif](media%2FTQC_wrapped.gif)
 
-<br>
+|       TRPO in the wrapped environment:        |       PPO in the wrapped environment:       |
+|:---------------------------------------------:|:-------------------------------------------:|
+| ![TRPO_wrapped.gif](media%2FTRPO_wrapped.gif) | ![PPO_wrapped.gif](media%2FPPO_wrapped.gif) |
 
-TRPO in the wrapped environment:
-
-![TRPO_wrapped.gif](media%2FTRPO_wrapped.gif)
-
-PPO in the wrapped environment:
-
-![PPO_wrapped.gif](media%2FPPO_wrapped.gif)
