@@ -45,27 +45,25 @@ pip install -r requirements.txt
 
 # Results
 
-The experiments are in this [notebook](notebook.ipynb).
+##### The experiments are in this [notebook](notebook.ipynb).
 
-Here are the results:
+##### Here are our best results:
 
 
-<video width="320" height="240" controls>
-  <source src="media/PPO_wrapped.mov" type="video/mp4">
-</video>
+TQC in the original environment:
+
+![TQC_original.gif](media/TQC_original.gif)
+
+TQC in the wrapped environment:
+
+![TQC_wrapped.gif](media%2FTQC_wrapped.gif)
 
 <br>
 
-<video width="320" height="240" controls>
-  <source src="video.mov" type="video/mp4">
-</video>
+TRPO in the wrapped environment:
 
-<video width="320" height="240" controls>
-  <source src="video.mov" type="video/mp4">
-</video>
+![TRPO_wrapped.gif](media%2FTRPO_wrapped.gif)
 
-<video width="320" height="240" controls>
-  <source src="video.mov" type="video/mp4">
-</video>
+PPO in the wrapped environment:
 
-
+![PPO_wrapped.gif](media%2FPPO_wrapped.gif)
