@@ -1,10 +1,14 @@
 # Gym Environments and Implementing Reinforcement Learning Agents with Stable Baselines
-Assignment for Introduction to Intelligent Autonomous Systems, 3º Year, 1º Semester , Bachelor in Artificial Intelligence and Data Science.
+Assignment for Introduction to Intelligent Autonomous Systems, 3º Year,
+1º Semester, Bachelor in Artificial Intelligence and Data Science.
 
 
 # Summary
 
-The aim of the project is to implement a reinforcement learning agent using the [stable baselines library](https://github.com/DLR-RM/stable-baselines3) algorithms and test it with the open source Python library [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) on this [gym environment](https://gymnasium.farama.org/environments/box2d/car_racing/).
+The aim of the project is
+to implement a reinforcement learning agent
+using the [stable baselines library](https://github.com/DLR-RM/stable-baselines3) algorithms
+and test it with the open-source Python library [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) on this [gym environment](https://gymnasium.farama.org/environments/box2d/car_racing/).
 
 
 **Autores**:
