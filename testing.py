@@ -20,7 +20,7 @@ def is_valid_iteration(iteration, algorithm):
 
 def test_model(algorithm, algo_name, iteration):
     # model = algorithm.load(f"models/{algo_name}/{iteration}.zip")
-    model = algorithm.load("final_models/original_TQC_original_env.zip")
+    model = algorithm.load("final_models/TQC_wrapped_env.zip")
     mean_reward, std_reward = evaluate_policy(model, env,
                                               n_eval_episodes=1, warn=False)
     print(f"mean_reward: {mean_reward:.2f} +/- {std_reward:.2f}")
