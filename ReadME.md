@@ -45,6 +45,27 @@ pip install -r requirements.txt
 
 # Results
 
-The experiments and results are in this [notebook](notebook.ipynb).
+The experiments are in this [notebook](notebook.ipynb).
+
+Here are the results:
+
+
+<video width="320" height="240" controls>
+  <source src="media/PPO_wrapped.mov" type="video/mp4">
+</video>
+
+<br>
+
+<video width="320" height="240" controls>
+  <source src="video.mov" type="video/mp4">
+</video>
+
+<video width="320" height="240" controls>
+  <source src="video.mov" type="video/mp4">
+</video>
+
+<video width="320" height="240" controls>
+  <source src="video.mov" type="video/mp4">
+</video>
 
 
