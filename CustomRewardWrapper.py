@@ -1,17 +1,16 @@
-from gymnasium import RewardWrapper as RW
+from gymnasium import RewardWrapper
+import numpy as np
 
 
-class RewardWrapper(RW):
-    def __init__(self, env):
+class CustomRewardWrapper(RewardWrapper):
+    def __init__(self, env, action_change_threshold=0.1):
         super().__init__(env)
         self.env = env
 
     def step(self, action):
-        # Perform the environment step
         obs, reward, done, _, info = self.env.step(action)
 
         # Add a reward for keeping balance
-        # obs[2] is the angle of the agent from the vertical position
         balance_reward = abs(obs[2])
         reward += balance_reward
 
