@@ -39,7 +39,6 @@ Then we need to install the requirements:
 pip install -r requirements.txt
 ```
 
-
 # Results
 
 The experiments and results are in this [notebook](notebook.ipynb).
