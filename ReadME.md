@@ -12,8 +12,9 @@ and test it with the open-source Python library [Gymnasium](https://github.com/F
 
 
 **Autores**:
-- [Sebastião Santos Lessa](https://github.com/seblessa/)
 - [Margarida Vila Chã](https://github.com/margaridavc/)
+- [Sebastião Santos Lessa](https://github.com/seblessa/)
+
 
 
 # Versões
